@@ -1,3 +1,4 @@
+Do **not** merge anything to master branch without Autumn's permission. Will cause lots of problems.
 # AMCS-wdeps
 A mini keybind cheat sheet for your convinience.
 # Plans
