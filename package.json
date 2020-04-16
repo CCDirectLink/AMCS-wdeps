@@ -1,11 +1,12 @@
 {
     "name": "AMCS-wdeps",
-    "version": "1.1.0",
+    "version": "1.0",
     "description": "A mini keybind cheat sheet for your convinience.",
     "module": true,
     "prestart": "mem.js",
     "ccmodDependencies": {
            "Simplify": "^2.0.0",
-		"crosscode": "^1.1.0"
+		"crosscode": "^1.1.0",
+		"Party++": "^1.0.0"
      }
 }
