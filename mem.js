@@ -162,27 +162,45 @@ function Gone(){
 		new ig.EVENT_STEP.REMOVE_PARTY_MEMBER ({member: 'Triblader1'}).start();
 }
 
-function Art(){
-	(() => {
-		const original = ig.system.setTimeFactor.bind(ig.system);
-		ig.system.setTimeFactor = () => {};
-		original(0.0001);
-		ig.game.playerEntity.coll.time.globalStatic = true;
-	})();
+
+let time = 1;
+let originalEnabled = true;
+
+init();
+
+function init() {
+    ig.System.inject({
+        setTimeFactor(factor) {
+            if (originalEnabled) {
+                return this.parent(factor);
+            } else {
+                return this.parent(time);
+            }
+
+        }
+    });
+    sc.CrossCode.inject({
+        init(...args) {
+            this.parent(...args);
+            this.addons.levelLoaded.push({
+                onLevelLoaded() {
+                    ig.game.playerEntity.coll.time.globalStatic = true;
+                }
+            });
+        }
+    });
 }
 
-function Anti(){
-	ig.game.addons.levelLoaded.push({onLevelLoaded() {
-		console.log('put your levelLoaded code in here');
-		(() => {
-			const original = ig.system.setTimeFactor.bind(ig.system);
-			ig.system.setTimeFactor = () => {};
-			original(1);
-			ig.game.playerEntity.coll.time.globalStatic = true;
-		})();
-	}});
+function Art() {
+    originalEnabled = false;
+    time = 0.00001;
+	ig.system.setTimeFactor();
+	ig.game.playerEntity.coll.time.globalStatic = true;
 }
-
+function Anti() {
+    originalEnabled = true;
+    ig.system.setTimeFactor(1);
+}
 
 
 //essential stuff no touchy >:O
