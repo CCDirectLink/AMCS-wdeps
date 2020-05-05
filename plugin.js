@@ -1,11 +1,11 @@
-
+// some stuff with export and normal game state
 export default class AMCS extends Plugin {
 	constructor() {
 		super();
 		this.time = 1;
 		this.enabled = false;
 	}
-
+// some weird stuff
 	prestart() {
 		this.hook();
 	}
@@ -35,7 +35,7 @@ export default class AMCS extends Plugin {
 		ig.game.addons.levelLoaded.push(this);
 		ig.game.addons.preUpdate.push(this);
 		
-
+// keybinds 
 		const header = 'AMCS';
 		ig.lang.labels.sc.gui.options.headers[header] = header;
 		this._registerKey('6', 'Call', 'Call', header);
@@ -43,7 +43,7 @@ export default class AMCS extends Plugin {
 		this._registerKey('8', 'Luna dial', 'Luna dial');
 		this._registerKey('9', 'Reset time flow', 'Reset time flow');
 	}
-
+// thing that affects time stop
 	onLevelLoaded() {
 		ig.game.playerEntity.coll.time.globalStatic = true;
 	}
@@ -67,7 +67,7 @@ export default class AMCS extends Plugin {
 			this.normalTime();
 		}
 	}
-
+// time stopping commands
 	stopTime() {
 		this.originalEnabled = false;
 		this.time = 0.00001;
@@ -89,7 +89,7 @@ export default class AMCS extends Plugin {
 		this['last' + name] = current;
 		return !last && current;
 	}
-
+// member calling commands
 	_memcall() {
 		for (const member of ['Glasses', 'Shizuka', 'Shizuka0', 'Emilie', 'Apollo', 'Buggy', 'Hlin', 'Joern', 'Schneider2', 'Schneider', 'Triblader1']) {
 			new ig.EVENT_STEP.ADD_PARTY_MEMBER({member}).start();
@@ -101,7 +101,7 @@ export default class AMCS extends Plugin {
 			new ig.EVENT_STEP.REMOVE_PARTY_MEMBER({member}).start();
 		}
 	}
-
+// thing that adds buttons in settings
 	_registerKey(key, id, name, header) {
 		const tab = 5;
 		const defaultKey = key.charCodeAt(0);
