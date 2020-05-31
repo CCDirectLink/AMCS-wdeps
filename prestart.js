@@ -21,10 +21,10 @@ sc.OPTIONS_DEFINITION['keys-Reset time flow'] = {
   cat: sc.OPTION_CATEGORY.CONTROLS
 };
 
-sc.AMCSAddon = ig.GameAddon.extend({
-  time: 1,
-  originalEnabled: false,
+const TIME_STOP_TIME_FACTOR = 0.00001;
+const TIME_STOP_TRANSITION_TIME = 0.5;
 
+sc.AMCSAddon = ig.GameAddon.extend({
   onLevelLoaded() {
     // thing that affects time stop
     ig.game.playerEntity.coll.time.globalStatic = true;
@@ -40,14 +40,11 @@ sc.AMCSAddon = ig.GameAddon.extend({
 
   // time stopping commands
   stopTime() {
-    this.originalEnabled = false;
-    this.time = 0.00001;
-    ig.system.setTimeFactor();
+    ig.slowMotion.add(TIME_STOP_TIME_FACTOR, TIME_STOP_TRANSITION_TIME, 'AMCS');
   },
 
   normalTime() {
-    this.originalEnabled = true;
-    ig.system.setTimeFactor(1);
+    ig.slowMotion.clearNamed('AMCS', TIME_STOP_TRANSITION_TIME);
   },
 
   // member calling commands
@@ -64,9 +61,3 @@ sc.AMCSAddon = ig.GameAddon.extend({
   }
 });
 ig.addGameAddon(() => (sc.amcsAddon = new sc.AMCSAddon()));
-
-ig.System.inject({
-  setTimeFactor(factor) {
-    return this.parent(sc.amcsAddon.originalEnabled ? factor : sc.amcsAddon.time);
-  }
-});
