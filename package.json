@@ -4,7 +4,10 @@
     "version": "2.0.0",
     "description": "A mini keybind cheat sheet for your convinience.",
     "plugin": "plugin.js",
+    "prestart": "prestart.js",
+    "main": "poststart.js",
     "ccmodDependencies": {
-		"crosscode": "^1.1.0"
+		"crosscode": "^1.1.0",
+		"input-api": "^1.0.0"
      }
 }

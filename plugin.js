@@ -34,14 +34,6 @@ export default class AMCS extends Plugin {
 	onGameInit() {
 		ig.game.addons.levelLoaded.push(this);
 		ig.game.addons.preUpdate.push(this);
-		
-// keybinds 
-		const header = 'AMCS';
-		ig.lang.labels.sc.gui.options.headers[header] = header;
-		this._registerKey('6', 'Call', 'Call', header);
-		this._registerKey('7', 'Vanish', 'Vanish');
-		this._registerKey('8', 'Luna dial', 'Luna dial');
-		this._registerKey('9', 'Reset time flow', 'Reset time flow');
 	}
 // thing that affects time stop
 	onLevelLoaded() {
@@ -90,47 +82,5 @@ export default class AMCS extends Plugin {
 		for (const member of ['Glasses', 'Shizuka', 'Shizuka0', 'Emilie', 'Apollo', 'Buggy', 'Hlin', 'Joern', 'Schneider2', 'Schneider', 'Triblader1']) {
 			new ig.EVENT_STEP.REMOVE_PARTY_MEMBER({member}).start();
 		}
-	}
-// thing that adds buttons in settings
-	_registerKey(key, id, name, header) {
-		const tab = 5;
-		const defaultKey = key.charCodeAt(0);
-		let defaultKeys = {key1: defaultKey, key2: undefined};
-		this._addEntry('keys-' + id, 'CONTROLS', defaultKeys, tab, undefined, undefined, header);
-		ig.input.bind(defaultKey, id); 
-	
-		ig.lang.labels.sc.gui.options.controls.keys[id] = name;
-	}
-
-	/**
-	 * Shameless copy of simplify.options.addEntry
-	 * @param {string} name 
-	 * @param {string} type 
-	 * @param {*} init 
-	 * @param {number} cat 
-	 * @param {*=} data 
-	 * @param {boolean=} restart 
-	 * @param {string=} header
-	 * @returns {any}
-	 */
-	_addEntry(name, type, init, cat, data, restart, header) {
-		const obj = {
-			type,
-			init,
-			cat,
-			data,
-			restart,
-
-		};
-		
-		if(header !== undefined) {
-			obj.hasDivider = true;
-			obj.header = header;
-		}
-		
-		sc.OPTIONS_DEFINITION[name] = obj;
-		sc.options.values[name] = init;
-
-		return obj;
 	}
 }
