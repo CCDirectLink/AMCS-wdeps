@@ -49,10 +49,10 @@ export default class AMCS extends Plugin {
 	}
 
 	onPreUpdate() {
-		const memcallPressed = this._pressed('Call');
-		const memgonePressed = this._pressed('Vanish');
-		const stopPressed = this._pressed('Luna dial');
-		const resetPressed = this._pressed('Reset time flow');
+		const memcallPressed = ig.input.pressed('Call');
+		const memgonePressed = ig.input.pressed('Vanish');
+		const stopPressed = ig.input.pressed('Luna dial');
+		const resetPressed = ig.input.pressed('Reset time flow');
 	
 		if (memcallPressed) {
 			this._memcall();
@@ -79,16 +79,6 @@ export default class AMCS extends Plugin {
 		ig.system.setTimeFactor(1);
 	}
 	
-	/**
-	 * 
-	 * @param {string} name 
-	 */
-	_pressed(name) {
-		const last = this['last' + name];
-		const current = ig.input.state(name);
-		this['last' + name] = current;
-		return !last && current;
-	}
 // member calling commands
 	_memcall() {
 		for (const member of ['Glasses', 'Shizuka', 'Shizuka0', 'Emilie', 'Apollo', 'Buggy', 'Hlin', 'Joern', 'Schneider2', 'Schneider', 'Triblader1']) {
